@@ -6,7 +6,20 @@ const isActive = (history, path) => {
     else return { color: '#ffffff' };
 };
 
+export const signout = (next) => {
+    if (typeof window !== 'undefined') {
+        localStorage.removeItem("jwt")
+    }
+    next();
 
+    return fetch("http://localhost:8080/signout", {
+        method: "GET"
+    })
+    .then(response => {
+        return response.json()
+    })
+    .catch(err => console.log(err));
+}
 
 const Menu = ({ history }) => (
     <div>
@@ -29,6 +42,16 @@ const Menu = ({ history }) => (
                 <Link className="nav-link" style={isActive(history, '/signup')} to="/signup">
                     Sign Up
                 </Link>
+            </li>
+
+            <li className="nav-item">
+                <a 
+                    className="nav-link" 
+                    style={isActive(history, '/signout')}
+                    onClick={() => signout(() => history.push('/'))}
+                >
+                    Sign Out
+                </a>
             </li>
 
         </ul>
