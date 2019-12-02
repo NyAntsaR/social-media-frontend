@@ -41,8 +41,8 @@ class Profile extends Component {
 
                     <div className="col-md-6">
                         <h2 className="mt-5 mb-5"> Profile</h2>
-                        <p>Hello {isAuthenticated().user.name} </p>
-                        <p> {isAuthenticated().user.email} </p>
+                        <p>Hello {user.name} </p>
+                        <p> {user.email} </p>
                         <p> {`Joined ${new Date(user.created).toDateString()}`} </p>
                     </div>
 
