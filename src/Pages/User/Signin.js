@@ -44,14 +44,14 @@ class Signin extends Component {
 
     authenticate = (jwt, next) => {
         // check if window is not undefined
-        if (typeof window !== "") {
+        if (typeof window !== "undefined") {
             localStorage.setItem("jwt", JSON.stringify(jwt));
         } next();
     }
 
     signin = (user) => {
         // Make a post request to the backend
-        return fetch("http://localhost:8080/signin", {
+        return fetch(`${process.env.REACT_APP_API_URL}/signin`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
