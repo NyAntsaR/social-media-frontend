@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { isAuthenticated } from '../Components/Menu/Menu'
-import { Redirect } from "react-router-dom"
+import { Redirect, Link } from "react-router-dom"
+import { read } from '../Pages/User/apiUser'
 
 class Profile extends Component {
     constructor() {
@@ -11,43 +12,57 @@ class Profile extends Component {
         }
     }
 
+    // init
+    init = (userId) => {
+        const token = isAuthenticated().token
+        read(userId, token).then(data => {
+            if(data.error) {
+                this.setState({ redirectToSignin: true });
+            } else {
+                this.setState({ user: data });
+            }
+        });
+    }
+
     // Get the user iformation based on the user Id from the backend
     componentDidMount () {
         const userId = this.props.match.params.userId;
-        fetch(`${process.env.REACT_APP_API_URL}/user/${userId}`, {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${ isAuthenticated().token }`
-            }
-        })
-        // handle the response to add to the state
-        .then(response => {
-            return response.json()
-        })
-        .then(data => {
-            if(data.error) {
-                this.setState({ redirectToSignin: true })
-            } else {
-                this.setState({ user: data })
-            }
-        })
+        this.init(userId); 
 
     }
 
     render() {
-        const redirectToSignin = this.state.redirectToSignin;
+        const {redirectToSignin, user } = this.state;
         if(redirectToSignin) return <Redirect to="/signin"/>
 
         return (
             <div className="container">
-                <h2 className="mt-5 mb-5">
-                    Profile
-                </h2>
-                <p>Hello {isAuthenticated().user.name} </p>
-                <p> {isAuthenticated().user.email} </p>
-                <p> {`Joined ${new Date(this.state.user.created).toDateString()}`} </p>
+                <div className="row">
+
+                    <div className="col-md-6">
+                        <h2 className="mt-5 mb-5"> Profile</h2>
+                        <p>Hello {isAuthenticated().user.name} </p>
+                        <p> {isAuthenticated().user.email} </p>
+                        <p> {`Joined ${new Date(user.created).toDateString()}`} </p>
+                    </div>
+
+                    <div className="col-md-6">
+                        { isAuthenticated().user._id == isAuthenticated().user._id && (
+                            <div className="d-inline-block mt-5"> 
+                                <Link 
+                                    className="btn btn-raised btn-success mr-5" 
+                                    to={`/user/edit/${ user._id }`}
+                                >
+                                    Edit Profile
+                                </Link>
+
+                                <button className="btn btn-raised btn-danger">
+                                    Delete Profile
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
         )
     }
