@@ -76,7 +76,8 @@ const Menu = ({ history }) => (
                        
                         <Link className="nav-link"
                             to={`/user/${isAuthenticated().user._id}`}
-                            style={{ color: '#fff' }}
+                            style={ isActive(history, `/user/${isAuthenticated().user._id }`) }
+
                         >
                             {`${isAuthenticated().user.name}'s profile`}
                         </Link>
