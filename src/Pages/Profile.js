@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { isAuthenticated } from '../Pages/Authentication/Signout'
-import { Redirect, Link } from "react-router-dom"
 import { read } from '../Pages/User/apiUser'
+import DefaultProfile from '../image/avatar.jpg'
+import { Redirect, Link } from "react-router-dom"
+import DeleteUser from '../Components/DeleteUser'
+import { isAuthenticated } from '../Pages/Authentication/Signout'
 
 class Profile extends Component {
     constructor() {
@@ -28,7 +30,12 @@ class Profile extends Component {
     componentDidMount () {
         const userId = this.props.match.params.userId;
         this.init(userId); 
+    }
 
+    // to see the current user profile info from the menu link
+    componentWillReceiveProps (props) {
+        const userId = props.match.params.userId;
+        this.init(userId); 
     }
 
     render() {
@@ -37,18 +44,30 @@ class Profile extends Component {
 
         return (
             <div className="container">
+                <h2 className="mt-5 mb-5"> Profile</h2>
                 <div className="row">
 
                     <div className="col-md-6">
-                        <h2 className="mt-5 mb-5"> Profile</h2>
-                        <p>Hello {user.name} </p>
-                        <p> {user.email} </p>
-                        <p> {`Joined ${new Date(user.created).toDateString()}`} </p>
+
+                        <img 
+                            className="card-img-top" 
+                            src={ DefaultProfile } 
+                            alt={user.name} 
+                            style={{ width: '100%', height: '15vw', objectFit: 'cover'}}
+                        />
+
                     </div>
 
                     <div className="col-md-6">
-                        { isAuthenticated().user == user._id && (
-                            <div className="d-inline-block mt-5"> 
+
+                        <div className="lead mt-2">
+                            <p>Hello {user.name} </p>
+                            <p> {user.email} </p>
+                            <p> {`Joined ${new Date(user.created).toDateString()}`} </p>
+                        </div>
+
+                        {isAuthenticated().user && isAuthenticated().user._id == user._id && (
+                            <div className="d-inline-block"> 
                                 <Link 
                                     className="btn btn-raised btn-success mr-5" 
                                     to={`/user/edit/${ user._id }`}
@@ -56,9 +75,8 @@ class Profile extends Component {
                                     Edit Profile
                                 </Link>
 
-                                <button className="btn btn-raised btn-danger">
-                                    Delete Profile
-                                </button>
+                                <DeleteUser />
+                                
                             </div>
                         )}
                     </div>

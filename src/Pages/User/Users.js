@@ -45,7 +45,7 @@ class Users extends Component {
                             className="btn btn-raised btn-primary btn-sm">
                                 View Profile
                         </Link>
-                        
+
                     </div>
 
               </div>
