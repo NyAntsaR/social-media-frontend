@@ -12,7 +12,7 @@ export const signout = (next) => {
     }
     next();
 
-    return fetch("http://localhost:8080/signout", {
+    return fetch(`${process.env.REACT_APP_API_URL}/signout`, {
         method: "GET"
     })
     .then(response => {
@@ -73,15 +73,16 @@ const Menu = ({ history }) => (
                     </li>
 
                     <li className="nav-item">
-                        <a className="nav-link" >
-                            {isAuthenticated().user.name}
-                        </a>
+                        <Link className="nav-link"
+                            to={`/user/{${isAuthenticated().user._id}'s profile}`} 
+                            style={{ color:"#fff" }}
+                        >
+                            {`${isAuthenticated().user.name}'s profile`}
+                        </Link>
                     </li>
                 </>
             )}
-
         </ul>
-
     </div>
 );
 
