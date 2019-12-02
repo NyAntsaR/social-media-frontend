@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { isAuthenticated } from '../Components/Menu/Menu'
+import { isAuthenticated } from '../Pages/Authentication/Signout'
 import { Redirect, Link } from "react-router-dom"
 import { read } from '../Pages/User/apiUser'
 
