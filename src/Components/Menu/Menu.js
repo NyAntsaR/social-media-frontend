@@ -43,13 +43,13 @@ const Menu = ({ history }) => (
             { isAuthenticated() && (
                 <>
                     <li className="nav-item">
-                        <a 
+                        <span 
                             className="nav-link" 
                             style={isActive(history, '/signout')}
                             onClick={() => signout(() => history.push('/'))}
                         >
                             Sign Out
-                        </a>
+                        </span>
                     </li>
 
                     <li className="nav-item">
