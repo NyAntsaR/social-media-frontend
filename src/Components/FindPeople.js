@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { findPeople } from '../Pages/User/apiUser';
+import { findPeople, follow } from '../Pages/User/apiUser';
 import DefaultProfile from '../image/avatar.jpg'
 import { Link } from 'react-router-dom';
 import { isAuthenticated } from '../Pages/Authentication/Signout';
@@ -8,7 +8,9 @@ class FindPeople extends Component {
     constructor() {
         super()
         this.state = {
-            users: []
+            users: [],
+            error: "",
+            open: false
         }
     }
 
@@ -22,6 +24,29 @@ class FindPeople extends Component {
                 console.log(data.error)
             } else {
                 this.setState({ users: data })
+            }
+        })
+    }
+
+    clickFollow = (user, i) => {
+        const userId = isAuthenticated().user._id;
+        const token = isAuthenticated().token;
+
+        // follow in apiUser
+        follow( userId, token, user._id)
+        .then(data => {
+            if (data.error) {
+                this.setState({error: data.error})
+            } else {
+                // find the user and remove 
+                let toFollow = this.state.users;
+                toFollow.splice(i, 1)
+                this.setState({
+                    users: toFollow,
+                    // show the message instead of the user
+                    open: true,
+                    followMessage: `Following ${user.name}`
+                })
             }
         })
     }
@@ -51,6 +76,10 @@ class FindPeople extends Component {
                                 View Profile
                         </Link>
 
+                        <button onClick={() => this.clickFollow(user, i)} className="btn btn-raised btn-info float-right btn-sm">
+                            Follow
+                        </button>
+
                     </div>
 
               </div>
@@ -60,10 +89,18 @@ class FindPeople extends Component {
  
     render() {
 
-        const { users } = this.state;
+        const { users, open, followMessage } = this.state;
         return (
             <div className="container">
-                <h2 className="mt-5 mb-5">Users</h2>
+                <h2 className="mt-5 mb-5">Find People</h2>
+
+                {open && (
+                    <div className="alert alert-success">
+                        <p>
+                            { followMessage }
+                        </p> 
+                    </div>
+                )}
 
                 { this.renderUser(users) }
     
