@@ -52,12 +52,13 @@ class EditProfile extends Component {
         }
 
         // password update optional
-        if ( password.length >= 1 && password.length <= 5 ) {
+        if ( password.length >= 1 && password.length <= 5  ) {
             this.setState({
-                error: "Password must be at least 6 characters!"
+                error: "Password must be at least 6 characters and at least one number!"
             })
             return false;
         }
+
         return true;
     }
 

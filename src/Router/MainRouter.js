@@ -8,6 +8,7 @@ import Menu from '../Components/Menu/Menu';
 import Profile from  '../Pages/Profile';
 import Users from '../Pages/User/Users';
 import EditProfile from '../Components/EditProfile';
+import PrivateRoute from '../Pages/Authentication/PrivateRoute'
 
 
 const MainRouter = () => (
@@ -18,8 +19,8 @@ const MainRouter = () => (
             <Route exact path="/users" component = { Users }></Route>
             <Route exact path="/signup" component= { Signup }></Route>
             <Route exact path="/signin" component= { Signin }></Route>
-            <Route exact path="/user/:userId" component= { Profile }></Route>
-            <Route exact path="/user/edit/:userId" component= { EditProfile }></Route>
+            <PrivateRoute exact path="/user/:userId" component= { Profile }></PrivateRoute>
+            <PrivateRoute exact path="/user/edit/:userId" component= { EditProfile }></PrivateRoute>
         </Switch>
     </div>
 );
