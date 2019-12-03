@@ -12,7 +12,9 @@ class EditProfile extends Component {
             email: "",
             password: "",
             redirectToProfile: false,
-            error: ""
+            error: "",
+            fileSize: 0,
+            loading: false
         };
     }
 
@@ -40,8 +42,13 @@ class EditProfile extends Component {
 
     // check if the input fields are valide
     isValid = () => {
-        const { name, email, password } = this.state;
-        if (name.length == 0 ) {
+        const { name, email, password, fileSize } = this.state;
+
+        if (fileSize > 1000000) {
+            this.setState({ error: "File size should be less than 1000kb" });
+            return false;
+        }
+        if (name.length === 0 ) {
             this.setState({error: "Name is required!"})
             return false
         }
@@ -55,7 +62,7 @@ class EditProfile extends Component {
         // password update optional
         if ( password.length >= 1 && password.length <= 5  ) {
             this.setState({
-                error: "Password must be at least 6 characters and at least one number!"
+                error: "Password must be at least 6 characters!"
             })
             return false;
         }
@@ -64,22 +71,20 @@ class EditProfile extends Component {
     }
 
     handleChange = name => event => {
-        const value = name === 'photo' ? event.target.files[0] : event.target.value
+        this.setState({ error: "" });
+        const value =
+            name === "photo" ? event.target.files[0] : event.target.value;
+
+        const fileSize = name === "photo" ? event.target.files[0].size : 0;
         this.userData.set(name, value);
-        this.setState({ [name]: value });
+        this.setState({ [name]: value, fileSize });
     };
 
     clickSubmit = event => {
         event.preventDefault();
+        this.setState({ loading: true });
         
         if(this.isValid()) {     
-            const { name, email, password } = this.state;
-            const user = {
-                name,
-                email,
-                password: password || undefined
-            };
-            // console.log(user);
             const userId = this.props.match.params.userId;
             const token = isAuthenticated().token;
 
@@ -95,7 +100,6 @@ class EditProfile extends Component {
 
     signupForm = (name, email, password) => (
         <form>
-
             <div className="form-group">
                 <label className="text-muted">Profile Photo</label>
                 <input
@@ -105,7 +109,6 @@ class EditProfile extends Component {
                     className="form-control"
                 />
             </div>
-
             <div className="form-group">
                 <label className="text-muted">Name</label>
                 <input
@@ -115,7 +118,6 @@ class EditProfile extends Component {
                     value={name}
                 />
             </div>
-
             <div className="form-group">
                 <label className="text-muted">Email</label>
                 <input
@@ -144,7 +146,7 @@ class EditProfile extends Component {
     );
 
     render() {
-        const { id, name, email, password, redirectToProfile, error } = this.state;
+        const { id, name, email, password, redirectToProfile, error, loading } = this.state;
 
         if (redirectToProfile) {
             return <Redirect to={`/user/${id}`} />;
@@ -161,6 +163,14 @@ class EditProfile extends Component {
                 >
                     {error}
                 </div>
+
+                { loading ? (
+                    <div className="jumbotron text-center">
+                        <h2>Loading...</h2>
+                    </div>
+                ) : (
+                    ""
+                )}
 
                 {this.signupForm(name, email, password)}
             </div>
