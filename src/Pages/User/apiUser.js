@@ -57,3 +57,15 @@ export const remove = (userId, token) => {
     })
     .catch( err => console.log(err));
 }
+
+export const updateUser = (user, next) => {
+    if(typeof window !== 'undefined') {
+        if(localStorage.getItem('jwt')) {
+            let auth = JSON.parse(localStorage.getItem('jwt'));
+            auth.user = user 
+            // set back
+            localStorage.setItem(`jwt`, JSON.stringify(auth));
+            next();
+        }
+    }
+}
