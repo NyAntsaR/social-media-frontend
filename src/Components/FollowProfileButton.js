@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
+import { follow } from '../Pages/User/apiUser';
 
 class FollowProfileButton extends Component {
+    followClick = () => {
+        this.props.onButtonClick(follow)
+    };
+
     render() {
         return (
             <div className="d-inline-block">
                 {
                     !this.props.following ?
                     (
-                        <button className="btn btn-success btn-raised mr-5">
+                        <button onClick={ this.followClick } className="btn btn-success btn-raised mr-5">
                             Follow
                         </button>
                     ) : 

@@ -12,7 +12,8 @@ class Profile extends Component {
         this.state = {
             user: {following: [], followers: []},
             redirectToSignin: false,
-            following: false
+            following: false,
+            error: ""
         };
     }
 
@@ -24,6 +25,22 @@ class Profile extends Component {
             return follower._id === jwt.user._id;
         })
         return match;
+    }
+
+    // set the data to the backend and update the follow or unfollow
+    // FollowProfileButton component will call this child component method
+    clickFollowButton = (callApi) => {
+        const userId = isAuthenticated().user._id;
+        const token = isAuthenticated().token;
+        
+        callApi( userId, token, this.state.user._id )
+        .then ( data => {
+            if (data.error) {
+                this.setState({ error: data.error })
+            } else {
+                this.setState({ user: data, following: !this.state.following })
+            }
+        });
     }
 
     // init
@@ -94,8 +111,11 @@ class Profile extends Component {
                                 <DeleteUser  userId={user._id}/>
                                 
                             </div>
-                        ) :  (<FollowProfileButton following={ this.state.following }/>
-                        
+                        ) :  (
+                            <FollowProfileButton 
+                                following={ this.state.following } 
+                                onButtonClick={ this.clickFollowButton } 
+                            />
                         )}
                     </div>
                 </div>
