@@ -10,9 +10,20 @@ class Profile extends Component {
     constructor() {
         super()
         this.state = {
-            user: "",
-            redirectToSignin: false
-        }
+            user: {following: [], followers: []},
+            redirectToSignin: false,
+            following: false
+        };
+    }
+
+    // check if user is already followed or not
+    checkFollow = user => {
+        const jwt = isAuthenticated();
+        // one id has many other ids (followers) and vice versa
+        const match = user.followers.find(follower => {
+            return follower._id === jwt.user._id;
+        })
+        return match;
     }
 
     // init
@@ -22,7 +33,8 @@ class Profile extends Component {
             if(data.error) {
                 this.setState({ redirectToSignin: true });
             } else {
-                this.setState({ user: data });
+                let following = this.checkFollow(data);
+                this.setState({ user: data, following });
             }
         });
     }
@@ -82,7 +94,7 @@ class Profile extends Component {
                                 <DeleteUser  userId={user._id}/>
                                 
                             </div>
-                        ) :  (<FollowProfileButton />
+                        ) :  (<FollowProfileButton following={ this.state.following }/>
                         
                         )}
                     </div>
