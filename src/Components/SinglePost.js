@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { signlePost } from '../api/apiPost';
 import DefaultPost from '../image/default.jpg';
 import { Link } from 'react-router-dom';
+import { isAuthenticated } from '../Pages/Authentication/Signout'
 
 
 class SinglePost extends Component {
@@ -45,12 +46,26 @@ class SinglePost extends Component {
                         on {new Date(post.created).toDateString()}
                     </p>
 
-                    <Link 
-                        to={`/`}
-                        className="btn btn-raised btn-primary btn-sm">
-                            Back to posts
-                    </Link>
+                    <div className="d-inline-block">
+                        <Link 
+                            to={`/`}
+                            className="btn btn-raised btn-primary btn-sm mr-5">
+                                Back to posts
+                        </Link>
 
+                        {isAuthenticated().user &&
+                            isAuthenticated().user._id === post.postedBy._id && 
+                            <>
+                                <button className="btn btn-raised btn-warning mr-5">
+                                    Update Post
+                                </button>
+
+                                <button className="btn btn-raised btn-danger">
+                                    Delete  Post
+                                </button>
+                            </>
+                        }   
+                    </div>
                 </div>
             </div>
         )

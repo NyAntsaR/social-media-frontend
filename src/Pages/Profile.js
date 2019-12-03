@@ -6,6 +6,8 @@ import DeleteUser from '../Components/DeleteUser'
 import { isAuthenticated } from '../Pages/Authentication/Signout'
 import FollowProfileButton from '../Components/FollowProfileButton'
 import FollowList from '../Components/FollowList';
+import { listByUser } from '../api/apiPost'
+
 
 
 
@@ -16,22 +18,21 @@ class Profile extends Component {
             user: { following: [], followers: [] },
             redirectToSignin: false,
             following: false,
-            error: ""
+            error: "",
+            posts: []
         };
     }
 
-    // check if user is already followed or not
+    // check follow
     checkFollow = user => {
         const jwt = isAuthenticated();
-        // one id has many other ids (followers) and vice versa
         const match = user.followers.find(follower => {
+            // one id has many other ids (followers) and vice versa
             return follower._id === jwt.user._id;
-        })
+        });
         return match;
     };
 
-    // set the data to the backend and update the follow or unfollow
-    // FollowProfileButton component will call this child component method
     clickFollowButton = callApi => {
         const userId = isAuthenticated().user._id;
         const token = isAuthenticated().token;
@@ -45,7 +46,6 @@ class Profile extends Component {
         });
     };
 
-    // init
     init = userId => {
         const token = isAuthenticated().token;
         read(userId, token).then(data => {
@@ -54,24 +54,34 @@ class Profile extends Component {
             } else {
                 let following = this.checkFollow(data);
                 this.setState({ user: data, following });
+                this.loadPosts(data._id);
             }
         });
     };
 
-    // Get the user iformation based on the user Id from the backend
+    loadPosts = userId => {
+        const token = isAuthenticated().token;
+        listByUser(userId, token).then(data => {
+            if (data.error) {
+                console.log(data.error);
+            } else {
+                this.setState({ posts: data });
+            }
+        });
+    };
+
     componentDidMount() {
         const userId = this.props.match.params.userId;
         this.init(userId);
     }
 
-    // to see the current user profile info from the menu link
     componentWillReceiveProps(props) {
         const userId = props.match.params.userId;
         this.init(userId);
     }
 
     render() {
-        const { redirectToSignin, user } = this.state;
+        const { redirectToSignin, user, posts } = this.state;
         if (redirectToSignin) return <Redirect to="/signin" />;
 
         const photoUrl = user._id
@@ -84,7 +94,7 @@ class Profile extends Component {
             <div className="container">
                 <h2 className="mt-5 mb-5">Profile</h2>
                 <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-4">
                         <img
                             style={{ height: "200px", width: "auto" }}
                             className="img-thumbnail"
@@ -94,7 +104,7 @@ class Profile extends Component {
                         />
                     </div>
 
-                    <div className="col-md-6">
+                    <div className="col-md-8">
                         <div className="lead mt-2">
                             <p>Hello {user.name}</p>
                             <p>Email: {user.email}</p>
@@ -107,11 +117,19 @@ class Profile extends Component {
                         isAuthenticated().user._id === user._id ? (
                             <div className="d-inline-block">
                                 <Link
+                                    className="btn btn-raised btn-info mr-5"
+                                    to={`/post/create`}
+                                >
+                                    Create Post
+                                </Link>
+
+                                <Link
                                     className="btn btn-raised btn-success mr-5"
                                     to={`/user/edit/${user._id}`}
                                 >
                                     Edit Profile
                                 </Link>
+                                
                                 <DeleteUser userId={user._id} />
                             </div>
                         ) : (
@@ -122,6 +140,7 @@ class Profile extends Component {
                         )}
                     </div>
                 </div>
+
                 <div className="row">
                     <div className="col md-12 mt-5 mb-5">
                         <hr />
@@ -131,13 +150,13 @@ class Profile extends Component {
                         <FollowList
                             followers={user.followers}
                             following={user.following}
+                            posts={posts}
                         />
                     </div>
                 </div>
             </div>
         );
     }
-
 }
 
 export default Profile;
