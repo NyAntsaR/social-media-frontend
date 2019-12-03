@@ -23,28 +23,42 @@ class Posts extends Component {
     }
 
     // show all users 
-    renderPost = (posts) => (
-        <div className="row">
-           
-            { posts.map((post, i) => (
-                <div className="card col-md-4" key={i}>
+    renderPost = (posts) => {
+        return (
+            <div className="row"> 
+                { posts.map((post, i) => {
+                    
+                    const posterId = post.postedBy ? `/user/${post.postedBy._id}` : "";
+                    const posterName = post.postedBy ? post.postedBy.name : "Unknown";
 
-                    <div className="card-body">
-                        <h5 className="card-title">{post.title}</h5>
-                        <p className="card-text">{post.body}</p>
+                    return (
 
-                        <Link 
-                            to={`/posts/${post._id}`}
-                            className="btn btn-raised btn-primary btn-sm">
-                                Read More
-                        </Link>
+                        <div className="card col-md-4" key={i}>
 
-                    </div>
+                            <div className="card-body">
+                                <h5 className="card-title">{post.title}</h5>
+                                <p className="card-text">{post.body.substring(0, 100)}</p>
+                                
+                                <br />
 
-              </div>
-            ))}
-        </div>
-    );
+                                <p className="font-italic mark">
+                                    Posted by <Link to={`${posterId}`}>{posterName}{" "}</Link>
+                                    on {new Date(post.created).toDateString()}
+                                </p>
+
+                                <Link 
+                                    to={`/posts/${post._id}`}
+                                    className="btn btn-raised btn-primary btn-sm">
+                                        Read More
+                                </Link>
+
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
+        )
+    };
  
     render() {
 
