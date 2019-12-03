@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import Home from '../Pages/Home';
 import Signup from '../Pages/Authentication/Signup';
 import Signin from '../Pages/Authentication/Signin';
-import Menu from '../Components/Menu/Menu';
+import Menu from '../Components/Menu';
 import Profile from  '../Pages/Profile';
 import Users from '../Pages/User/Users';
 import EditProfile from '../Components/EditProfile';
