@@ -55,7 +55,7 @@ class Posts extends Component {
                                 </p>
 
                                 <Link 
-                                    to={`/posts/${post._id}`}
+                                    to={`/post/${post._id}`}
                                     className="btn btn-raised btn-primary btn-sm">
                                         Read More
                                 </Link>

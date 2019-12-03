@@ -11,6 +11,7 @@ import EditProfile from '../Components/EditProfile';
 import FindPeople from '../Components/FindPeople';
 import NewPost from '../Pages/NewPost';
 import PrivateRoute from '../Pages/Authentication/PrivateRoute'
+import SinglePost from '../Components/SinglePost';
 
 
 const MainRouter = () => (
@@ -18,6 +19,7 @@ const MainRouter = () => (
         <Menu />
         <Switch>
             <Route exact path="/" component={ Home }></Route>
+            <Route exact path="/post/:postId" component={ SinglePost }></Route>
             <Route exact path="/users" component = { Users }></Route>
             <Route exact path="/signup" component= { Signup }></Route>
             <Route exact path="/signin" component= { Signin }></Route>
