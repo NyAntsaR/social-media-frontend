@@ -4,6 +4,7 @@ import DefaultProfile from "../image/avatar.jpg"
 import { Redirect, Link } from "react-router-dom"
 import DeleteUser from '../Components/DeleteUser'
 import { isAuthenticated } from '../Pages/Authentication/Signout'
+import FollowProfileButton from '../Components/FollowProfileButton'
 
 class Profile extends Component {
     constructor() {
@@ -69,7 +70,7 @@ class Profile extends Component {
                             <p> {`Joined ${new Date(user.created).toDateString()}`} </p>
                         </div>
 
-                        {isAuthenticated().user && isAuthenticated().user._id === user._id && (
+                        {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
                             <div className="d-inline-block"> 
                                 <Link 
                                     className="btn btn-raised btn-success mr-5" 
@@ -81,6 +82,8 @@ class Profile extends Component {
                                 <DeleteUser  userId={user._id}/>
                                 
                             </div>
+                        ) :  (<FollowProfileButton />
+                        
                         )}
                     </div>
                 </div>
