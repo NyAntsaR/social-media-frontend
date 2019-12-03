@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { read } from '../Pages/User/apiUser'
-import DefaultProfile from '../image/avatar.jpg'
+import DefaultProfile from "../image/avatar.jpg"
 import { Redirect, Link } from "react-router-dom"
 import DeleteUser from '../Components/DeleteUser'
 import { isAuthenticated } from '../Pages/Authentication/Signout'
@@ -42,6 +42,8 @@ class Profile extends Component {
         const {redirectToSignin, user } = this.state;
         if(redirectToSignin) return <Redirect to="/signin"/>
 
+        const photoUrl = user._id ? `${process.env.REACT_APP_API_URL}/user/photo/${user._id}?${new Date().getTime()}` : DefaultProfile;
+
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5"> Profile</h2>
@@ -49,12 +51,13 @@ class Profile extends Component {
 
                     <div className="col-md-6">
 
-                        <img 
-                            className="card-img-top" 
-                            src={ DefaultProfile } 
-                            alt={user.name} 
-                            style={{ width: '100%', height: '15vw', objectFit: 'cover'}}
-                        />
+                    <img 
+                        style={{height: "200px", width: "auto"}} 
+                        className="img-thumbail" 
+                        src={photoUrl} 
+                        onError={i => (i.target.src = `${DefaultProfile}`)}
+                        alt={user.name} 
+                    />
 
                     </div>
 
