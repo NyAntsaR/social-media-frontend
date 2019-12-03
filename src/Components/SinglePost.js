@@ -1,14 +1,15 @@
 import React, { Component } from "react";
-import { signlePost } from '../api/apiPost';
+import { signlePost, remove } from '../api/apiPost';
 import DefaultPost from '../image/default.jpg';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { isAuthenticated } from '../Pages/Authentication/Signout'
 
 
 class SinglePost extends Component {
 
     state = {
-        post: ''
+        post: '',
+        redirectToHome: false
     }
 
     componentDidMount = () => {
@@ -20,6 +21,18 @@ class SinglePost extends Component {
                 this.setState({ post: data })
             }
         });
+    }
+
+    deletePost = () => {
+        const postId = this.props.match.params.postId;
+        const token = isAuthenticated().token
+        remove(postId, token).then(data => {
+            if (data.error) {
+                console.log(data.error);
+            } else {
+                this.setState({redirectToHome: true})
+            }
+        })
     }
 
     renderPost = (post) => {
@@ -60,7 +73,7 @@ class SinglePost extends Component {
                                     Update Post
                                 </button>
 
-                                <button className="btn btn-raised btn-danger">
+                                <button onClick={this.deletePost} className="btn btn-raised btn-danger">
                                     Delete  Post
                                 </button>
                             </>
@@ -72,6 +85,11 @@ class SinglePost extends Component {
     }
 
     render () {
+
+        if (this.state.redirectToHome) {
+            return <Redirect to={`/`} />;
+        }
+
         const {post} = this.state
         return (
             <div className="container">

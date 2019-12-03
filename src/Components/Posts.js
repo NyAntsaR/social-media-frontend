@@ -39,7 +39,7 @@ class Posts extends Component {
                                 alt={post.title}
                                 onError={i => i.target.src = `${DefaultPost}`}
                                 className="img-thumbnail mb-3"
-                                style={{ height: '200px', width: 'auto' }}
+                                style={{ height: '200px', width: '100%' }}
                             />
 
 

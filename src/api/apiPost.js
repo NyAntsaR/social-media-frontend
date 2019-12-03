@@ -52,3 +52,19 @@ export const listByUser = (userId, token) => {
     .catch( err => console.log(err));
 }
 
+export const remove = (postId, token) => {
+    return fetch(`${process.env.REACT_APP_API_URL}/post/${postId}`, {
+        method: "DELETE",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${ token }`
+        }
+    })
+    // handle the response to add to the state
+    .then(response => {
+        return response.json()
+    })
+    .catch( err => console.log(err));
+}
+
