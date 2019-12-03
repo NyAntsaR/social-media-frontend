@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { list } from '../api/apiPost';
-// import DefaultProfile from '../image/avatar.jpg'
+import DefaultPost from '../image/default.jpg';
 import { Link } from 'react-router-dom';
 
 class Posts extends Component {
@@ -34,6 +34,14 @@ class Posts extends Component {
                     return (
 
                         <div className="card col-md-4" key={i}>
+                            <img 
+                                src={`${process.env.REACT_APP_API_URL}/post/ohoto/${post._id}`} 
+                                alt={post.title}
+                                onError={i => i.target.src = `${DefaultPost}`}
+                                className="img-thumbnail mb-3"
+                                style={{ height: '200px', width: 'auto' }}
+                            />
+
 
                             <div className="card-body">
                                 <h5 className="card-title">{post.title}</h5>
