@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { isAuthenticated } from '../Pages/Authentication/Signout';
-import { remove } from '../Pages/User/apiUser';
+import { remove } from '../api/apiUser';
 import { signout } from '../Pages/Authentication/Signout'
 import { Redirect } from 'react-router-dom'
 

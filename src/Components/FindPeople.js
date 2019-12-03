@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { findPeople, follow } from '../Pages/User/apiUser';
+import { findPeople, follow } from '../api/apiUser';
 import DefaultProfile from '../image/avatar.jpg'
 import { Link } from 'react-router-dom';
 import { isAuthenticated } from '../Pages/Authentication/Signout';

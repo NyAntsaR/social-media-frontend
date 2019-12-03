@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { list } from '../User/apiUser';
-import DefaultProfile from '../../image/avatar.jpg'
+import { list } from '../api/apiUser';
+import DefaultProfile from '../image/avatar.jpg'
 import { Link } from 'react-router-dom';
 
 class Users extends Component {

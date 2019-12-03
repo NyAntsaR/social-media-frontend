@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { read } from '../Pages/User/apiUser'
+import { read } from '../api/apiUser'
 import DefaultProfile from "../image/avatar.jpg"
 import { Redirect, Link } from "react-router-dom"
 import DeleteUser from '../Components/DeleteUser'

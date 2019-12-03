@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { isAuthenticated } from '../Pages/Authentication/Signout'
-import { read, update, updateUser } from '../Pages/User/apiUser'
+import { read, update, updateUser } from '../api/apiUser'
 import { Redirect } from 'react-router-dom'
 import DefaultProfile from "../image/avatar.jpg"
 

@@ -6,10 +6,10 @@ import Signup from '../Pages/Authentication/Signup';
 import Signin from '../Pages/Authentication/Signin';
 import Menu from '../Components/Menu';
 import Profile from  '../Pages/Profile';
-import Users from '../Pages/User/Users';
+import Users from '../Pages/Users';
 import EditProfile from '../Components/EditProfile';
 import FindPeople from '../Components/FindPeople';
-import NewPost from '../Components/Post/NewPost';
+import NewPost from '../Pages/NewPost';
 import PrivateRoute from '../Pages/Authentication/PrivateRoute'
 
 

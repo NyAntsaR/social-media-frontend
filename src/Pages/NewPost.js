@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { isAuthenticated } from '../../Pages/Authentication/Signout'
-import { create } from '../Post/apiPost'
+import { isAuthenticated } from './Authentication/Signout'
+import { create } from '../api/apiPost'
 import { Redirect } from 'react-router-dom'
 
 class NewPost extends Component {

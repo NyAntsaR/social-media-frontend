@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { follow, unfollow } from "../Pages/User/apiUser";
+import { follow, unfollow } from "../api/apiUser";
 
 class FollowProfileButton extends Component {
     followClick = () => {
