@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { isAuthenticated } from '../../Pages/Authentication/Signout'
 import { create } from '../Post/apiPost'
-
+import { Redirect } from 'react-router-dom'
 
 class NewPost extends Component {
     constructor() {
@@ -13,7 +13,8 @@ class NewPost extends Component {
             error:'',
             user: {},
             fileSize: 0,
-            loading: false
+            loading: false,
+            redirectToProfile: false
         };
     }
 
@@ -59,7 +60,7 @@ class NewPost extends Component {
             create(userId, token, this.postData).then(data => {
                 if (data.error) this.setState({ error: data.error });
                 else
-                    console.log('New Post: ', data)
+                    this.setState({ loading: false, title: '', body: '' , photo: '', redirectToProfile: true})
             });
         }
     };
@@ -105,14 +106,11 @@ class NewPost extends Component {
     );
 
     render() {
-        const { title, body, photo, user, error, loading } = this.state;
+        const { title, body, photo, user, error, loading, redirectToProfile } = this.state;
 
-        // if (redirectToProfile) {
-        //     return <Redirect to={`/user/${id}`} />;
-        // }
-
-        // const photoUrl = id ? `${process.env.REACT_APP_API_URL}/user/photo/${id}?${new Date().getTime()}` : DefaultProfile;
-
+        if (redirectToProfile) {
+            return <Redirect to={`/user/${user._id}`} />
+        }
         
         return (
             <div className="container">
@@ -132,12 +130,6 @@ class NewPost extends Component {
                 ) : (
                     ""
                 )}
-
-                {/* <img 
-                    style={{height: "200px", width: "auto"}} 
-                    className="img-thumbnail" 
-                    src={photoUrl} alt={name} 
-                /> */}
 
                 {this.newPostForm(title, body)}
             </div>
