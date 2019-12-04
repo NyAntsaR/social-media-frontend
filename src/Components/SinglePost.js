@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { signlePost, remove } from '../api/apiPost';
+import { singlePost, remove } from '../api/apiPost';
 import DefaultPost from '../image/default.jpg';
 import { Link, Redirect } from 'react-router-dom';
 import { isAuthenticated } from '../Pages/Authentication/Signout'
@@ -14,7 +14,7 @@ class SinglePost extends Component {
 
     componentDidMount = () => {
         const postId = this.props.match.params.postId;
-        signlePost(postId).then(data => {
+        singlePost(postId).then(data => {
             if(data.error) {
                 console.log(data.error);
             } else {
