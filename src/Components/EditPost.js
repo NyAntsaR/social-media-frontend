@@ -2,7 +2,7 @@ import React , { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { singlePost , update } from '../api/apiPost'
 import { isAuthenticated } from '../Pages/Authentication/Signout'
-
+import DefaultPost from "../image/post.png"
 
 class EditPost extends Component {
     constructor() {
@@ -128,7 +128,7 @@ class EditPost extends Component {
     );
 
     render() {
-        const { title, body, redirectToProfile } = this.state;
+        const { id, title, body, redirectToProfile, error, loading } = this.state;
 
         if (redirectToProfile) {
             return <Redirect to={`/user/${isAuthenticated().user._id}`} />;
@@ -137,6 +137,30 @@ class EditPost extends Component {
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">{title}</h2>
+
+                <div 
+                    className="aler alert-danger"
+                    style={{ display: error ? "" : "none" }}
+                >
+                    {error}
+                </div>
+
+                { loading ? (
+                    <div className="jumbotron text-center">
+                        <h2>Loading...</h2>
+                    </div>
+                ) : (
+                    ""
+                )}
+
+                <img 
+                    style={{height: "200px", width: "auto"}} 
+                    className="img-thumbnail" 
+                    src={`${process.env.REACT_APP_API_URL}/post/photo/${id}`} 
+                    onError={i => (i.target.src = `${DefaultPost}`)}
+                    alt={title} 
+                />
+
                 {this.editPostForm(title, body)}
             </div>
         );
