@@ -3,6 +3,7 @@ import { singlePost, remove, like, unlike } from '../api/apiPost';
 import DefaultPost from '../image/default.jpg';
 import { Link, Redirect } from 'react-router-dom';
 import { isAuthenticated } from '../Pages/Authentication/Signout'
+import Comment from "../Components/Comment"
 
 class SinglePost extends Component {
 
@@ -11,7 +12,8 @@ class SinglePost extends Component {
         redirectToHome: false,
         redirectToSignin: false,
         like: false,
-        likes: 0
+        likes: 0,
+        comments: []
     }
 
     checkLike = likes => {
@@ -29,11 +31,16 @@ class SinglePost extends Component {
                 this.setState({
                     post: data,
                     likes: data.likes.length,
-                    like: this.checkLike(data.likes)
+                    like: this.checkLike(data.likes),
+                    comments: data.comments
                 });
             }
         });
     }
+
+    updateComments = comments => {
+        this.setState({ comments });
+    };
 
     likeToggle = () => {
         if (!isAuthenticated()) {
@@ -147,7 +154,7 @@ class SinglePost extends Component {
 
     render () {
 
-        const { post, redirectToHome, redirectToSignin } = this.state;
+        const { post, redirectToHome, redirectToSignin, comments } = this.state;
 
         if (redirectToHome) {
             return <Redirect to={`/`} />;
@@ -166,6 +173,12 @@ class SinglePost extends Component {
                         this.renderPost(post)
                     )
                 }
+
+                <Comment
+                    postId={post._id}
+                    comments={comments.reverse()}
+                    updateComments={this.updateComments}
+                />  
 
             </div>
         );
