@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
 import styles from '../../style/Signin.module.css'
+import SocialLogin from './SocialLogin';
 
 class Signin extends Component {
 
@@ -73,6 +74,10 @@ class Signin extends Component {
                 <div className={styles.modal}>
                     <div className={styles.card}>
                         <div className={styles.title}> SignIn </div>
+                        <div>
+                            <SocialLogin />
+                        </div>
+                        <hr></hr>
                         <form id={styles.signUp}>
 
                             <div className={styles.input}>
@@ -121,7 +126,6 @@ class Signin extends Component {
         return (
             <>
                 <div>
-
                     <div className="alert alert-primary" style={{ display: error ? "" : "none" }}>
                         { error }
                     </div>
