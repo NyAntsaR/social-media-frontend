@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
+import styles from '../../style/Signin.module.css'
 
 class Signin extends Component {
 
@@ -67,35 +68,45 @@ class Signin extends Component {
 
     signinForm = ( email, password ) => {
         return (
-            <form>
+            <>
+                <div className={styles.bg}></div>
+                <div className={styles.modal}>
+                    <div className={styles.card}>
+                        <div className={styles.title}> SignIn </div>
+                        <form id={styles.signUp}>
 
-                <div className="form-group">
-                    <label className="text-muted"> Email </label>
-                    <input 
-                        onChange = { this.handleChange("email") } 
-                        type="email" 
-                        className="form-control" 
-                        value = { email }
-                    />
-                </div>
+                            <div className={styles.input}>
+                                <label className="text-muted"> Email </label>
+                                <input 
+                                    onChange = { this.handleChange("email") } 
+                                    type="email" 
+                                    className="form-control" 
+                                    value = { email }
+                                />
+                            </div>
 
-                <div className="form-group">
-                    <label className="text-muted"> Password </label>
-                    <input 
-                        onChange = { this.handleChange("password") } 
-                        type="password" 
-                        className="form-control" 
-                        value = { password }
-                    />
-                </div>
+                            <div className={styles.input}>
+                                <label className="text-muted"> Password </label>
+                                <input 
+                                    onChange = { this.handleChange("password") } 
+                                    type="password" 
+                                    className="form-control" 
+                                    value = { password }
+                                />
+                            </div>
+                        </form>
 
-                <button 
-                    className="btn btn-raised btn-primary"
-                    onClick={this.clickSubmit}>
-                        Submit
-                </button>
+                        <hr/>
 
-            </form>
+                        <button 
+                            style={{backgroundColor: "#ff9900"}}
+                            className="btn btn-raised btn-lg"
+                            onClick={this.clickSubmit}>
+                                Submit
+                        </button>
+                    </div>
+                </div> 
+            </>  
         )
     }
 
@@ -108,23 +119,16 @@ class Signin extends Component {
         }
 
         return (
-            <div className="container">
-                <h2 className="mt-5 mb-5">SignIn</h2>
+            <>
+                <div>
 
-                <div className="alert alert-primary" style={{ display: error ? "" : "none" }}>
-                    { error }
+                    <div className="alert alert-primary" style={{ display: error ? "" : "none" }}>
+                        { error }
+                    </div>
+
+                    { this.signinForm( email, password ) }
                 </div>
-
-                { loading ? (
-                    <div className="jumbotron text-center">
-                        <h2>Loading...</h2>
-                    </div> ) : (
-                        ""
-                    )
-                }
-
-                { this.signinForm( email, password ) }
-            </div>
+            </>
         )
     }
 }

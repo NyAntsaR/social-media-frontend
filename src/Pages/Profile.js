@@ -8,9 +8,6 @@ import FollowProfileButton from '../Components/FollowProfileButton'
 import FollowList from '../Components/FollowList';
 import { listByUser } from '../api/apiPost'
 
-
-
-
 class Profile extends Component {
     constructor() {
         super();
@@ -91,70 +88,93 @@ class Profile extends Component {
             : DefaultProfile;
 
         return (
-            <div className="container">
-                <h2 className="mt-5 mb-5">Profile</h2>
-                <div className="row">
-                    <div className="col-md-4">
-                        <img
-                            style={{ height: "200px", width: "auto" }}
-                            className="img-thumbnail"
-                            src={photoUrl}
-                            onError={i => (i.target.src = `${DefaultProfile}`)}
-                            alt={user.name}
-                        />
-                    </div>
+            <>
+                <h2 style={{ textAlign: "center"}}>Profile</h2>
+                <hr />
 
-                    <div className="col-md-8">
-                        <div className="lead mt-2">
-                            <p>Hello {user.name}</p>
-                            <p>Email: {user.email}</p>
-                            <p>{`Joined ${new Date(
-                                user.created
-                            ).toDateString()}`}</p>
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-4">
+                            <img
+                                style={{ height: "250px", width: "auto", borderRadius: "50%", marginTop: "10px" }}
+                                className="img-thumbnail"
+                                src={photoUrl}
+                                onError={i => (i.target.src = `${DefaultProfile}`)}
+                                alt={user.name}
+                            />
                         </div>
 
-                        {isAuthenticated().user &&
-                        isAuthenticated().user._id === user._id ? (
-                            <div className="d-inline-block">
-                                <Link
-                                    className="btn btn-raised btn-info mr-5"
-                                    to={`/post/create`}
-                                >
-                                    Create Post
-                                </Link>
+                        <div style={{ border: "1px solid #ffe6e6", padding: "10px", borderRadius: "3px"}} className="col-md-8" id="profile">
+                            <div className="lead mt-2">
+                                <p> 
+                                    Hello {" "}   
+                                    <span style={{ fontFamily: "Dancing Script", color: "#ff9900", fontWeight: "bold"}}>
+                                        {user.name}
+                                    </span>
+                                    <br />
+                                    <span style={{color: "gray", fontSize: "13px", fontFamily: "Yanone Kaffeesatz"}}>
+                                        {user.email}
+                                    </span>
+                                </p>
 
-                                <Link
-                                    className="btn btn-raised btn-success mr-5"
-                                    to={`/user/edit/${user._id}`}
-                                >
-                                    Edit Profile
-                                </Link>
-                                
-                                <DeleteUser userId={user._id} />
+                                <hr />
+                                <p className="lead">{user.about}</p>
+
+                                <p>
+                                    <span style={{color: "gray", fontSize: "13px", fontFamily: "Yanone Kaffeesatz"}}>
+                                            {`Joined ${new Date(
+                                            user.created
+                                        ).toDateString()}`}
+                                    </span>
+                                </p>
                             </div>
-                        ) : (
-                            <FollowProfileButton
-                                following={this.state.following}
-                                onButtonClick={this.clickFollowButton}
+
+                            {isAuthenticated().user &&
+                            isAuthenticated().user._id === user._id ? (
+                                <div className="btn-group">
+                                    <Link
+                                        style={{ backgroundColor: "#9e7700", borderRadius: "3px"}}
+                                        className="btn btn-raised mr-5"
+                                        to={`/post/create`}
+                                    >
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                        {" "}Create Post
+                                    </Link>
+
+                                    <Link
+                                    
+                                        style={{ backgroundColor: "#9e4f00", borderRadius: "3px"}}
+                                        className="btn btn-raised mr-5"
+                                        to={`/user/edit/${user._id}`}
+                                    >
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                        {" "} Edit Profile
+                                    </Link>
+                                    
+                                    <DeleteUser userId={user._id} />
+                                </div>
+                            ) : (
+                                <FollowProfileButton
+                                    following={this.state.following}
+                                    onButtonClick={this.clickFollowButton}
+                                />
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col md-12 mt-5 mb-5">
+                            <hr />
+
+                            <FollowList
+                                followers={user.followers}
+                                following={user.following}
+                                posts={posts}
                             />
-                        )}
+                        </div>
                     </div>
                 </div>
-
-                <div className="row">
-                    <div className="col md-12 mt-5 mb-5">
-                        <hr />
-                        <p className="lead">{user.about}</p>
-                        <hr />
-
-                        <FollowList
-                            followers={user.followers}
-                            following={user.following}
-                            posts={posts}
-                        />
-                    </div>
-                </div>
-            </div>
+            </>
         );
     }
 }

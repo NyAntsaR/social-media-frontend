@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { list } from '../api/apiUser';
 import DefaultProfile from '../image/avatar.jpg'
 import { Link } from 'react-router-dom';
+import styles from '../style/User.module.css'
 
 class Users extends Component {
     constructor() {
@@ -24,33 +25,38 @@ class Users extends Component {
 
     // show all users 
     renderUser = (users) => (
-        <div className="row">
-           
-            { users.map((user, i) => (
-                <div className="card col-md-4" key={i}>
+        <div className="container">
+            <div className="row">
+                { users.map((user, i) => (
+                    <div class="col-xl-3 col-md-6 mb-4">
 
-                    <img 
-                        style={{height: "200px", width: "auto"}} 
-                        className="img-thumbail" 
-                        src={`${process.env.REACT_APP_API_URL}/user/photo/${user._id}`} 
-                        onError={i => (i.target.src = `${DefaultProfile}`)}
-                        alt={user.name} 
-                    />
+                        <div style={{borderRadius: "3px"}} className="card border-0 shadow" key={i}>
 
-                    <div className="card-body">
-                        <h5 className="card-title">{user.name}</h5>
-                        <p className="card-text">{user.email}</p>
+                            <img 
+                                style={{height: "200px", width: "auto", borderRadius: "3px"}} 
+                                className="img-thumbail" 
+                                src={`${process.env.REACT_APP_API_URL}/user/photo/${user._id}`} 
+                                onError={i => (i.target.src = `${DefaultProfile}`)}
+                                alt={user.name} 
+                            />
 
-                        <Link 
-                            to={`/user/${user._id}`}
-                            className="btn btn-raised btn-primary btn-sm">
-                                View Profile
-                        </Link>
+                            <div className="card-body">
+                                <h5 className="card-title text-center mb-0">{user.name}</h5>
+                                <p className="card-text text-black-50">{user.email}</p>
 
+                                <hr />
+
+                                <Link
+                                    id={styles.btn}
+                                    to={`/user/${user._id}`}
+                                    className="btn btn-raised btn-sm">
+                                        View Profile
+                                </Link>
+                            </div>
+                        </div>  
                     </div>
-
-              </div>
-            ))}
+                ))}
+            </div>
         </div>
     );
  
@@ -58,12 +64,14 @@ class Users extends Component {
 
         const { users } = this.state;
         return (
-            <div className="container">
-                <h2 className="mt-5 mb-5">Users</h2>
+            <>
+                <h2 style={{textAlign: "center"}} className="mb-5">Users</h2>
+                <div className="container">
 
-                { this.renderUser(users) }
-    
-            </div>
+                    { this.renderUser(users) }
+        
+                </div>
+            </>
         )
     }
 }

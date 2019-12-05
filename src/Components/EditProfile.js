@@ -104,61 +104,83 @@ class EditProfile extends Component {
     };
 
     signupForm = (name, email, password, about) => (
-        <form>
-            <div className="form-group">
-                <label className="text-muted">Profile Photo</label>
-                <input
-                    onChange={this.handleChange("photo")}
-                    type="file"
-                    accept="image/*"
-                    className="form-control"
-                />
-            </div>
-            <div className="form-group">
-                <label className="text-muted">Name</label>
-                <input
-                    onChange={this.handleChange("name")}
-                    type="text"
-                    className="form-control"
-                    value={name}
-                />
-            </div>
-            <div className="form-group">
-                <label className="text-muted">Email</label>
-                <input
-                    onChange={this.handleChange("email")}
-                    type="email"
-                    className="form-control"
-                    value={email}
-                />
-            </div>
+        <div className="container">
+            <div className="row" style={{marginBottom: "20px"}}>
+                <div className="col-8">
 
-            <div className="form-group">
-                <label className="text-muted">About</label>
-                <textarea
-                    onChange={this.handleChange("about")}
-                    type="text"
-                    className="form-control"
-                    value={about}
-                />
-            </div>
+              
+                    <div style={{ padding: "20px"}}className="card card-signin flex-row my-10">
+                        <div className="card-body">
+                            <h5 style={{fontSize:"30px"}} className="card-title text-center">Edit Profile</h5>
+                            <hr />
 
-            <div className="form-group">
-                <label className="text-muted">Password</label>
-                <input
-                    onChange={this.handleChange("password")}
-                    type="password"
-                    className="form-control"
-                    value={password}
-                />
+                            <form class="form-signin">
+                                <div className="form-group">
+                                    <label className="text-muted">Profile Photo</label>
+                                    <input
+                                        onChange={this.handleChange("photo")}
+                                        type="file"
+                                        accept="image/*"
+                                        className="form-control"
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="text-muted">Name</label>
+                                    <input
+                                        onChange={this.handleChange("name")}
+                                        type="text"
+                                        className="form-control"
+                                        value={name}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="text-muted">Email</label>
+                                    <input
+                                        onChange={this.handleChange("email")}
+                                        type="email"
+                                        className="form-control"
+                                        value={email}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="text-muted">About</label>
+                                    <textarea
+                                        onChange={this.handleChange("about")}
+                                        type="text"
+                                        className="form-control"
+                                        value={about}
+                                    />
+                                </div>
+
+                                <div className="form-group">
+                                    <label className="text-muted">Password</label>
+                                    <input
+                                        onChange={this.handleChange("password")}
+                                        type="password"
+                                        className="form-control"
+                                        value={password}
+                                    />
+                                </div>
+                                <button
+                                    style={{ color: "white", backgroundColor:"#ff9900"}}
+                                    onClick={this.clickSubmit}
+                                    className="btn btn-raised btn-lg btn-block text-uppercase"
+                                >
+                                    Update
+                                </button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div className="col-4">
+                    <img style={{width: "435px", borderRadius: "3px"}} src="https://cdn.pixabay.com/photo/2017/05/13/12/39/beauty-2309516_1280.jpg"></img>
+                </div>
             </div>
-            <button
-                onClick={this.clickSubmit}
-                className="btn btn-raised btn-primary"
-            >
-                Update
-            </button>
-        </form>
+        </div>
     );
 
     render() {
@@ -172,32 +194,34 @@ class EditProfile extends Component {
 
         
         return (
-            <div className="container">
-                <h2 className="mt-5 mb-5">Edit Profile</h2>
+            <>
+                <h2 style={{textAlign: "center"}} className="mb-5">Edit Profile</h2>
+                <div className="container">
 
-                <div 
-                    className="aler alert-danger"
-                    style={{ display: error ? "" : "none" }}
-                >
-                    {error}
-                </div>
-
-                { loading ? (
-                    <div className="jumbotron text-center">
-                        <h2>Loading...</h2>
+                    <div 
+                        className="aler alert-danger"
+                        style={{ display: error ? "" : "none" }}
+                    >
+                        {error}
                     </div>
-                ) : (
-                    ""
-                )}
 
-                <img 
-                    style={{height: "200px", width: "auto"}} 
-                    className="img-thumbnail" 
-                    src={photoUrl} alt={name} 
-                />
+                    { loading ? (
+                        <div className="jumbotron text-center">
+                            <h2>Loading...</h2>
+                        </div>
+                    ) : (
+                        ""
+                    )}
 
-                {this.signupForm(name, email, password, about)}
-            </div>
+                    <img 
+                        style={{height: "200px", width: "auto"}} 
+                        className="img-thumbnail" 
+                        src={photoUrl} alt={name} 
+                    />
+
+                    {this.signupForm(name, email, password, about)}
+                </div>
+            </>
         );
     }
 }

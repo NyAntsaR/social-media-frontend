@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
+import styles from '../../style/Signup.module.css'
 
 class Signup extends Component {
 
@@ -62,45 +63,55 @@ class Signup extends Component {
 
     signupForm = ( name, email, password ) => {
         return (
-            <form>
+            <>
+                <div className={styles.bg}></div>
+                <div className={styles.modal}>
+                    <div className={styles.card}>
+                        <div className={styles.title}> Sign Up </div>
+                        <form id={styles.signUp}>
 
-                <div className="form-group">
-                    <label className="text-muted"> Name </label>
-                    <input 
-                        onChange = { this.handleChange("name") } 
-                        type="text" 
-                        className="form-control" 
-                        value = { name }
-                    />
-                </div>
+                            <div className={styles.input}>
+                                <label className="text-muted"> Name </label>
+                                <input 
+                                    onChange = { this.handleChange("name") } 
+                                    type="text" 
+                                    className="form-control" 
+                                    value = { name }
+                                />
+                            </div>
 
-                <div className="form-group">
-                    <label className="text-muted"> Email </label>
-                    <input 
-                        onChange = { this.handleChange("email") } 
-                        type="email" 
-                        className="form-control" 
-                        value = { email }
-                    />
-                </div>
+                            <div className={styles.input}>
+                                <label className="text-muted"> Email </label>
+                                <input 
+                                    onChange = { this.handleChange("email") } 
+                                    type="email" 
+                                    className="form-control" 
+                                    value = { email }
+                                />
+                            </div>
 
-                <div className="form-group">
-                    <label className="text-muted"> Password </label>
-                    <input 
-                        onChange = { this.handleChange("password") } 
-                        type="password" 
-                        className="form-control" 
-                        value = { password }
-                    />
-                </div>
+                            <div className={styles.input}>
+                                <label className="text-muted"> Password </label>
+                                <input 
+                                    onChange = { this.handleChange("password") } 
+                                    type="password" 
+                                    className="form-control" 
+                                    value = { password }
+                                />
+                            </div>
+                        </form>
 
-                <button 
-                    className="btn btn-raised btn-primary"
-                    onClick={this.clickSubmit}>
-                        Submit
-                </button>
+                        <hr/>
 
-            </form>
+                        <button 
+                            style={{backgroundColor: "#ff9900"}}
+                            className="btn btn-raised btn-lg"
+                            onClick={this.clickSubmit}>
+                                Submit
+                        </button>
+                    </div>
+                </div> 
+            </> 
         )
     }
 
@@ -109,8 +120,7 @@ class Signup extends Component {
         const { name, email, password, error, open } = this.state;
 
         return (
-            <div className="container">
-                <h2 className="mt-5 mb-5">Signup</h2>
+            <>
 
                 <div className="alert alert-primary" style={{ display: error ? "" : "none" }}>
                     { error }
@@ -121,7 +131,8 @@ class Signup extends Component {
                 </div>
 
                 { this.signupForm( name, email, password ) }
-            </div>
+            </>
+           
         )
     }
 }

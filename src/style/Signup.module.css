@@ -1,0 +1,49 @@
+.bg {
+    position: absolute;
+    z-index: -1;
+    background-image: url("https://cdn.pixabay.com/photo/2016/06/29/01/51/smile-1485850_1280.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Lexend Peta';
+    filter: blur(2px);
+    background-position: center;
+  }
+  .modal {
+    padding-top: 100px;
+    height: 100%;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+  }
+  .card {
+    background-color: rgba(255,255,255,0.5);
+    width: 500px;
+    height: 500px;
+    border-radius: 12px;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
+  label {
+    background-color: rgba(0,0,0,0);
+    box-shadow: 0;
+    border: 0;
+    border-bottom: 1px #b5b5b5 solid;
+    width: 100%;
+    font-size: 18px;
+    padding: 5px;
+    color: rgba(0,0,0,0.4);
+    font-family: 'Varela Round';
+  }
+
+  .title {
+    font-size: 40px;
+    font-family: 'Lobster';
+    color: #8B0000;
+    margin-bottom: 20px;
+  }

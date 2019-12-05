@@ -3,6 +3,7 @@ import { findPeople, follow } from '../api/apiUser';
 import DefaultProfile from '../image/avatar.jpg'
 import { Link } from 'react-router-dom';
 import { isAuthenticated } from '../Pages/Authentication/Signout';
+import styles from '../style/FindPeople.module.css'
 
 class FindPeople extends Component {
     constructor() {
@@ -53,37 +54,41 @@ class FindPeople extends Component {
 
     // show all users 
     renderUser = (users) => (
-        <div className="row">
-           
-            { users.map((user, i) => (
-                <div className="card col-md-4" key={i}>
+        <div className="container">
+            <div className="row">
+                { users.map((user, i) => (
+                    <div className="col-xl-3 col-md-6 mb-4">
+                        <div style={{borderRadius: "3px", border:"1px solid black", width:"302px"}} key={i}>
 
-                    <img 
-                        style={{height: "200px", width: "auto"}} 
-                        className="img-thumbail" 
-                        src={`${process.env.REACT_APP_API_URL}/user/photo/${user._id}`} 
-                        onError={i => (i.target.src = `${DefaultProfile}`)}
-                        alt={user.name} 
-                    />
+                            <img 
+                                style={{height: "200px", width: "auto", borderRadius: "3px"}} 
+                                className="img-thumbail" 
+                                src={`${process.env.REACT_APP_API_URL}/user/photo/${user._id}`} 
+                                onError={i => (i.target.src = `${DefaultProfile}`)}
+                                alt={user.name} 
+                            />
 
-                    <div className="card-body">
-                        <h5 className="card-title">{user.name}</h5>
-                        <p className="card-text">{user.email}</p>
+                            <div className="card-body">
+                                <h5 className="card-title text-center mb-0">{user.name}</h5>
+                                <p className="card-text text-black-50">{user.email}</p>
 
-                        <Link 
-                            to={`/user/${user._id}`}
-                            className="btn btn-raised btn-primary btn-sm">
-                                View Profile
-                        </Link>
+                                <hr/>
 
-                        <button onClick={() => this.clickFollow(user, i)} className="btn btn-raised btn-info float-right btn-sm">
-                            Follow
-                        </button>
+                                <Link 
+                                    id={styles.btn}
+                                    to={`/user/${user._id}`}
+                                    className="btn btn-raised btn-sm">
+                                        View Profile
+                                </Link>
 
+                                <button style={{backgroundColor: "#"}} onClick={() => this.clickFollow(user, i)} className="btn float-right btn-sm btn btn-success btn-raised mr-5">
+                                    Follow
+                                </button>
+                            </div>
+                        </div>
                     </div>
-
-              </div>
-            ))}
+                ))}
+            </div>
         </div>
     );
  
@@ -91,9 +96,9 @@ class FindPeople extends Component {
 
         const { users, open, followMessage } = this.state;
         return (
-            <div className="container">
-                <h2 className="mt-5 mb-5">Find People</h2>
-
+            <>
+                <h2 style={{ textAlign: "center"}} className="mb-5">Follow people</h2>
+                
                 {open && (
                     <div className="alert alert-success">
                         <p>
@@ -101,10 +106,8 @@ class FindPeople extends Component {
                         </p> 
                     </div>
                 )}
-
                 { this.renderUser(users) }
-    
-            </div>
+            </>
         )
     }
 }

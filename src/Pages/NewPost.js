@@ -3,6 +3,7 @@ import { isAuthenticated } from './Authentication/Signout'
 import { create } from '../api/apiPost'
 import { Redirect } from 'react-router-dom'
 
+
 class NewPost extends Component {
     constructor() {
         super();
@@ -66,43 +67,70 @@ class NewPost extends Component {
     };
 
     newPostForm = (title, body) => (
-        <form>
-            <div className="form-group">
-                <label className="text-muted">Photo Post</label>
-                <input
-                    onChange={this.handleChange("photo")}
-                    type="file"
-                    accept="image/*"
-                    className="form-control"
-                />
-            </div>
-            <div className="form-group">
-                <label className="text-muted">Title</label>
-                <input
-                    onChange={this.handleChange("title")}
-                    type="text"
-                    className="form-control"
-                    value={title}
-                />
-            </div>
+            <div className="container">
+                <div className="row" style={{marginBottom: "20px"}}>
+                    <div className="col-8">
+                        <div style={{ padding: "20px"}}className="card card-signin flex-row my-10">
+                            
+                            <div className="card-body">
+                                <h5 style={{fontSize:"30px"}} className="card-title text-center">Create your post</h5>
+                                <hr/>
+                                <form class="form-signin">
+                                    <label className="text-muted">Upload Photo</label>
+                                    <div className="form-label-group">
+                                        <input
+                                            onChange={this.handleChange("photo")}
+                                            type="file"
+                                            accept="image/*"
+                                            className="form-control"
+                                        />
+                                    </div>
 
-            <div className="form-group">
-                <label className="text-muted">Body</label>
-                <textarea
-                    onChange={this.handleChange("body")}
-                    type="text"
-                    className="form-control"
-                    value={body}
-                />
-            </div>
+                                    <br />
 
-            <button
-                onClick={this.clickSubmit}
-                className="btn btn-raised btn-primary"
-            >
-                Create Post
-            </button>
-        </form>
+                                    <div className="form-label-group">
+                                        <label className="text-muted">Title</label>
+                                        <input
+                                            onChange={this.handleChange("title")}
+                                            type="text"
+                                            className="form-control"
+                                            value={title}
+                                        />
+                                    </div>
+                               
+                                    <br />
+                                    <div className="form-label-group">
+                                        <label className="text-muted">Description</label>
+                                        <textarea
+                                            onChange={this.handleChange("body")}
+                                            type="text"
+                                            className="form-control"
+                                            value={body}
+                                        />
+                                    </div>
+                                    <hr/>
+
+                                    <button
+                                        style={{backgroundColor: "#ff9900", color: "white"}}
+                                        onClick={this.clickSubmit}
+                                        className="btn btn-lg btn-block text-uppercase"
+                                    >
+                                        Create Post
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-4">
+                       
+                            <img style={{width: "342px", borderRadius: "3px"}}src="https://cdn.pixabay.com/photo/2019/12/04/13/12/hair-4672683_1280.jpg"/>
+              
+                    </div>
+                </div>
+            </div>
+    
+   
     );
 
     render() {
@@ -113,26 +141,28 @@ class NewPost extends Component {
         }
         
         return (
-            <div className="container">
-                <h2 className="mt-5 mb-5">Create a new post </h2>
+            <>
+                <h2 className="mb-5" style={{ textAlign: "center"}}>Create a new post </h2>
+                <div className="container">
 
-                <div 
-                    className="aler alert-danger"
-                    style={{ display: error ? "" : "none" }}
-                >
-                    {error}
-                </div>
-
-                { loading ? (
-                    <div className="jumbotron text-center">
-                        <h2>Loading...</h2>
+                    <div 
+                        className="aler alert-danger"
+                        style={{ display: error ? "" : "none" }}
+                    >
+                        {error}
                     </div>
-                ) : (
-                    ""
-                )}
 
-                {this.newPostForm(title, body)}
-            </div>
+                    { loading ? (
+                        <div className="jumbotron text-center">
+                            <h2>Loading...</h2>
+                        </div>
+                    ) : (
+                        ""
+                    )}
+
+                    {this.newPostForm(title, body)}
+                </div>
+            </>
         );
     }
 }

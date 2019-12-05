@@ -43,8 +43,9 @@ class DeleteUser extends Component {
         }
         return (
             <div>
-                <button onClick={this.deleteConfirmed} className="btn btn-raised btn-danger mr-5" >
-                    Delete Profile
+                <button style={{ color: "black" }} onClick={this.deleteConfirmed} className="btn btn-raised btn-danger mr-5" >
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    {" "}Delete Profile
                 </button>
             </div>
         )

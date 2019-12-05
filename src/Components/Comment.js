@@ -83,9 +83,9 @@ class Comment extends Component {
 
         return (
             <div>
-                <h2 className="mt-5 mb-5">Leave a comment</h2>
+                <h4 style={{fontSize: "20px"}} className="mt-4">Leave a comment</h4>
 
-                <form onSubmit={this.addComment}>
+                <form  style={{margin: "10px"}} onSubmit={this.addComment}>
                     <div className="form-group">
                         <input
                             type="text"
@@ -133,9 +133,10 @@ class Comment extends Component {
                                 </Link>
                                 <div>
                                     <p className="lead">{comment.text}</p>
-                                    <p className="font-italic mark">
+                                    <p style={{ backgroundColor:"#ffd699" }} className="font-italic ">
                                         Posted by{" "}
                                         <Link
+                                            style={{ textDecoration: "none", color: "#ff9900", fontFamily: "Dancing Script", fontWeight: "bold"}}
                                             to={`/user/${comment.postedBy._id}`}
                                         >
                                             {comment.postedBy.name}{" "}
@@ -157,7 +158,7 @@ class Comment extends Component {
                                                             }
                                                             className="text-danger float-right mr-1"
                                                         >
-                                                            Remove
+                                                           <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </span>
                                                     </>
                                                 )}

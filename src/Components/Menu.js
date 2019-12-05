@@ -1,26 +1,27 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { signout, isAuthenticated } from '../Pages/Authentication/Signout';
+import style from '../style/Menu.module.css'
 
 const isActive = (history, path) => {
-    if (history.location.pathname === path) return { color: '#ff9900' };
-    else return { color: '#ffffff' };
+    if (history.location.pathname === path) return { color: '#ff9900', fontWeight: "bold", fontStyle: "italic"};
+    else return { color: '#ffffff', fontWeight: "bold" };
 };
 
 const Menu = ({ history }) => (
-    <div>
-
-        <ul className="nav nav-tabs bg-primary">
-
-            <li className="nav-item">
+    <div className={style.navbar}>
+        <ul className="nav navbar navbar-right">
+            <li className="navbar-brand">
+                
                 <Link className="nav-link" style={isActive(history, '/')} to="/">
-                    Home
+                    <i className="fa fa-home" aria-hidden="true" style={{ color: "black" }}></i>
+                    {"  "}<span style={{ fontFamily: "Dancing Script", color: "#ff9900" }}> Connect </span>
                 </Link>
             </li>
-
             <li className="nav-item">
                 <Link className="nav-link" style={isActive(history, '/users')} to="/users">
-                    Users
+                    <i class="fa fa-users" aria-hidden="true" style={{ color: "black" }}></i>
+                    {"  "}Users
                 </Link>
             </li>
 
@@ -28,13 +29,15 @@ const Menu = ({ history }) => (
                 <>
                     <li className="nav-item">
                         <Link className="nav-link" style={isActive(history, '/signin')} to="/signin">
-                            Sign In
+                            <i class="fa fa-sign-in" aria-hidden="true" style={{ color: "black" }}></i>
+                            {"  "}Sign In
                         </Link>
                     </li>
 
                     <li className="nav-item">
                         <Link className="nav-link" style={isActive(history, '/signup')} to="/signup">
-                            Sign Up
+                            <i class="fa fa-sign-in" aria-hidden="true" style={{ color: "black" }}></i>
+                            {"  "}Sign Up
                         </Link>
                     </li>
                 </>
@@ -49,8 +52,9 @@ const Menu = ({ history }) => (
                            to={`/findpeople`}
                            style={ isActive(history, `/findpeople`) }
 
-                       >
-                           Find People
+                       >    
+                            <i class="fa fa-search" aria-hidden="true" style={{ color: "black" }}></i>
+                            {"  "}Find People
                        </Link>
                            
                    </li>
@@ -62,7 +66,8 @@ const Menu = ({ history }) => (
                            style={ isActive(history, `/post/create`) }
 
                        >
-                           Create Post
+                           <i class="fa fa-plus" aria-hidden="true" style={{ color: "black" }}></i>
+                           {"  "}Create Post
                        </Link>
                            
                    </li>
@@ -74,7 +79,10 @@ const Menu = ({ history }) => (
                             style={ isActive(history, `/user/${isAuthenticated().user._id }`) }
 
                         >
-                            {`${isAuthenticated().user.name}'s profile`}
+                            <i class="fa fa-user" aria-hidden="true" style={{ color: "#ff9900" }}></i>
+                            <span style={{ fontWeight: "bold", color: "#ff9900"}}> 
+                                {"  "}{`${isAuthenticated().user.name}`}
+                            </span> 's profile
                         </Link>
                             
                     </li>
@@ -85,7 +93,8 @@ const Menu = ({ history }) => (
                             style={isActive(history, '/signout')}
                             onClick={() => signout(() => history.push('/'))}
                         >
-                            Sign Out
+                            <i class="fa fa-sign-out" aria-hidden="true" style={{ color: "black" }}></i>
+                            {"   "}Sign Out
                         </span>
                     </li>
                 </>

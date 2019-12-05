@@ -8,12 +8,12 @@ class FollowList extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col-md-4">
+                    <div style={{ border: "1px solid #ffe6e6", padding: "10px", borderRadius: "3px"}} className="col-md-4">
                         <h3 className="text-primary">Followers</h3>
                         <hr />
                         {followers.map((person, i) => (
                             <div key={i}>
-                                <div>
+                                <div >
                                     <Link to={`/user/${person._id}`}>
                                         <img
                                             style={{borderRadius: "50%", border: '1px solid black'}}
@@ -35,11 +35,12 @@ class FollowList extends Component {
                                         </div>
                                     </Link>
                                 </div>
+                                <hr />
                             </div>
                         ))}
                     </div>
 
-                    <div className="col-md-4">
+                    <div style={{ border: "1px solid #ffe6e6", padding: "10px", borderRadius: "3px"}} className="col-md-4" className="col-md-4">
                         <h3 className="text-primary">Following</h3>
                         <hr />
                         {following.map((person, i) => (
@@ -66,11 +67,12 @@ class FollowList extends Component {
                                         </div>
                                     </Link>
                                 </div>
+                                <hr/>
                             </div>
                         ))}
                     </div>
 
-                    <div className="col-md-4">
+                    <div className="col-md-4" style={{ border: "1px solid #ffe6e6", padding: "10px", borderRadius: "3px"}} className="col-md-4" className="col-md-4">
                         <h3 className="text-primary">Posts</h3>
                         <hr />
                         {posts.map((post, i) => (
@@ -86,6 +88,7 @@ class FollowList extends Component {
                                 </div>
                             </div>
                         ))}
+                        <hr />
                     </div>
                 </div>
             </div>
