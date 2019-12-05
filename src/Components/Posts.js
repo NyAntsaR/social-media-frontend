@@ -38,7 +38,7 @@ class Posts extends Component {
 
                                     <div className="card border-0 shadow" key={i}>
                                         <img 
-                                            src={`${process.env.REACT_APP_API_URL}/post/ohoto/${post._id}`} 
+                                            src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`} 
                                             alt={post.title}
                                             onError={i => i.target.src = `${DefaultPost}`}
                                             className="card-img-top"
