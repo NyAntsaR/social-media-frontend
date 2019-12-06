@@ -93,7 +93,7 @@ class SinglePost extends Component {
             <div style={{border: "1px solid black", borderRadius: "3px", padding:"10px"}} className="container">
                 <div className="card border-0 shadow">
                     <img 
-                        src={`${process.env.REACT_APP_API_URL}/post/ohoto/${post._id}`} 
+                        src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`} 
                         alt={post.title}
                         onError={i => i.target.src = `${DefaultPost}`}
                         className="img-thumbnail mb-3"
